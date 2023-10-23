@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Socket.IO Mock Data</title>
+</head>
+<body>
+    <h1>Socket.IO Mock Data</h1>
+    <button id="sendNewObject">Send New Object</button>
+    <button id="sendUpdateObject">Send Update Object</button>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        document.getElementById('sendNewObject').addEventListener('click', () => {
+            const newData = { message: 'This is a new object' };
+            socket.emit('newObject', newData);
+        });
+
+        document.getElementById('sendUpdateObject').addEventListener('click', () => {
+            const updatedData = { message: 'This object has been updated' };
+            socket.emit('updateObject', updatedData);
+        });
+    </script>
+</body>
+</html>
