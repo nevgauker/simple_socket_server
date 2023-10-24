@@ -27,9 +27,10 @@ app.get('/', (req, res) => {
 
 const objectCreateChannelName = process.env.OBEJECT_CREATE_CHANNEL_NAME
 const objectUpdateChannelName = process.env.OBEJECT_UPDATE_CHANNEL_NAME
+const objectDeleteChannelName = process.env.OBEJECT_DELETE_CHANNEL_NAME
 
-if (!objectCreateChannelName || !objectUpdateChannelName) {
-  console.log("Set OBEJECT_CREATE_CHANNEL_NAME and OBEJECT_UPDATE_CHANNEL_NAME in your environment")
+if (!objectCreateChannelName || !objectUpdateChannelName || !objectDeleteChannelName) {
+  console.log("Set OBEJECT_CREATE_CHANNEL_NAME & OBEJECT_UPDATE_CHANNEL_NAME & objectDeleteChannelName in your environment")
   process.exit();
 }
 
@@ -48,6 +49,13 @@ io.on('connection', (socket) => {
     console.log('Received updated object:', data);
     // Broadcast the updated object to all connected clients
     io.emit(objectUpdateChannelName, data);
+  });
+
+  socket.on(objectDeleteChannelName, (data) => {
+    // Handle delete JSON object here
+    console.log('Received object to delete:', data);
+    // Broadcast the updated object to all connected clients
+    io.emit(objectDeleteChannelName, data);
   });
 
   socket.on('disconnect', () => {
